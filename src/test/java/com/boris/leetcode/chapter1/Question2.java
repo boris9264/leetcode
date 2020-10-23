@@ -30,7 +30,7 @@ public class Question2 {
     @Before
     public void init() {
         listNode1 = new ListNode(2, new ListNode(4, new ListNode(3)));
-        listNode2 = new ListNode(5, new ListNode(6, new ListNode(4, new ListNode(2))));
+        listNode2 = new ListNode(5, new ListNode(6, new ListNode(9, new ListNode(9))));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class Question2 {
         ListNode result = curNode;
         int carry = 0;
         while(true) {
-            if (Objects.isNull(listNode1) && Objects.isNull(listNode2)) {
+            if (Objects.isNull(listNode1) && Objects.isNull(listNode2) && carry==0) {
                 break;
             }
             curNode.next = new ListNode(carry);
@@ -60,7 +60,7 @@ public class Question2 {
             }
 
             if (curNode.val >= 10) {
-                curNode.val = curNode.val-10;
+                curNode.val = curNode.val%10;
                 carry = 1;
             } else {
                 carry = 0;
