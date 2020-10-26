@@ -1,10 +1,9 @@
 package com.boris.leetcode.chapter1;
 
 import org.junit.Test;
-import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: boris
@@ -35,40 +34,36 @@ public class Question3 {
 
     @Test
     public void test() {
-        String str = "pwawkew";
-
+//        String str = "abcad";
+        String str = "ababcabcdab";
         System.out.println(this.getMaxDiffrentLength(str));
     }
 
     public int getMaxDiffrentLength(String str) {
-        if (StringUtils.isEmpty(str)) {
-            return 0;
-        }
-
-        if (str.length()==1) {
-            return 1;
-        }
-
-        String[] strArr = str.split("");
-        int maxDiffrentLength = 0;
-        for (int i = 0; i < strArr.length; i++) {
-            if (strArr.length - i < maxDiffrentLength) {
+        Set<Character> set = new HashSet<>();
+        int maxLenth = 0;
+        int range;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.length()-i<=maxLenth) {
+                System.out.println("break;");
                 break;
             }
-            List<String> strList = new ArrayList<>();
-            strList.add(strArr[i]);
-            for (int j = i+1; j < strArr.length; j++) {
-                if (!strList.contains(strArr[j])) {
-                    strList.add(strArr[j]);
-                } else {
-                    if (strList.size() > maxDiffrentLength) {
-                        maxDiffrentLength = strList.size();
-                    }
-                    break;
-                }
+
+            if (i > 0) {
+                set.remove(str.charAt(i-1));
+            } else {
+                set.add(str.charAt(i));
             }
+
+            range = i + 1;
+            while (range<str.length() && !set.contains(str.charAt(range))) {
+                set.add(str.charAt(range));
+                range++;
+            }
+
+            maxLenth = Math.max(maxLenth, range-i);
         }
-        return maxDiffrentLength;
+        return maxLenth;
     }
 
 }
